@@ -1,0 +1,5 @@
+Erlang running on OSv. still a work in progress.
+
+make
+capstan build -v
+capstan run

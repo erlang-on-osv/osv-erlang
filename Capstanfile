@@ -1,0 +1,2 @@
+base: osv-empty
+cmdline: --env=BINDIR=/usr/lib/erlang/erts-6.2/bin /usr/lib/erlang/erts-6.2/bin/beam -- -root /usr/lib/erlang -progname erl -- -home / --
