@@ -12,7 +12,7 @@ otp_src_$(OTP_VERSION): otp_src_$(OTP_VERSION).tar.gz
 	tar xvf "$<"
 
 configure: otp_src_$(OTP_VERSION)
-	cd otp_src_$(OTP_VERSION); export ERL_TOP=$(CURDIR)/otp_src_$(OTP_VERSION) CFLAGS=-fpie LDFLAGS=-pie; ./configure -prefix=/usr --disable-silent-rules --disable-threads --disable-smp-support --disable-kernel-poll --disable-sctp --disable-hipe --disable-megaco-flex-scanner-lineno --disable-megaco-reentrant-flex-scanner --enable-builtin-zlib --without-termcap --without-javac --without-ssl --without-wx --without-asn1 --without-common_test --without-cosEvent --without-cosEventDomain --without-cosFileTransfer --without-cosNotification --without-cosProperty --without-cosTime --without-cosTransactions --without-crypto --without-debugger --without-dialyzer --without-diameter --without-edoc --without-eldap --without-erl_docgen --without-erl_interface --without-et --without-eunit --without-gs --without-hipe --without-ic --without-jinterface --without-megaco --without-mnesia --without-observer --without-odbc --without-orber --without-ose --without-os_mon --without-otp_mibs --without-percept --without-public_key --without-snmp --without-ssl --without-ssl --without-test_server --without-tools --without-typer --without-webtool --without-xmerl
+	cd otp_src_$(OTP_VERSION); export ERL_TOP=$(CURDIR)/otp_src_$(OTP_VERSION) CFLAGS=-fpie LDFLAGS=-pie; ./configure -prefix=/usr --disable-threads --disable-smp-support --disable-hipe --without-hipe --without-odbc --without-os_mon --enable-builtin-zlib --without-termcap --without-wx --without-erl_interface --without-javac --without-jinterface
 
 compile:
 	cd otp_src_$(OTP_VERSION); export ERL_TOP=$(CURDIR)/otp_src_$(OTP_VERSION); make
@@ -22,3 +22,4 @@ ROOTFS:
 
 install:
 	cd otp_src_$(OTP_VERSION); export ERL_TOP=$(CURDIR)/otp_src_$(OTP_VERSION) DESTDIR=$(CURDIR)/ROOTFS; make install
+	find ROOTFS -name '*.so' | xargs -I {} ldd {} | grep -Po '(?<=> )/[^ ]+' | sort | uniq | grep -Pv 'lib(c|dl|m|util|rt|pthread).so' | xargs -I {} install -D -T {} ROOTFS{}
