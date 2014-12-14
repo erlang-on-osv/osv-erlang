@@ -12,7 +12,7 @@ otp_src_$(OTP_VERSION): otp_src_$(OTP_VERSION).tar.gz
 	tar xvf "$<"
 
 configure: otp_src_$(OTP_VERSION)
-	cd otp_src_$(OTP_VERSION); export ERL_TOP=$(CURDIR)/otp_src_$(OTP_VERSION) CFLAGS=-fpie LDFLAGS=-pie; ./configure -prefix=/usr --libdir=/usr/lib64 --disable-hipe --without-hipe --without-odbc --without-os_mon --enable-builtin-zlib --without-termcap --without-wx --without-erl_interface --without-javac --without-jinterface
+	cd otp_src_$(OTP_VERSION); export ERL_TOP=$(CURDIR)/otp_src_$(OTP_VERSION) CFLAGS="-fpie -DDISABLE_CHILD_WAITER_THREAD" LDFLAGS=-pie; ./configure -prefix=/usr --libdir=/usr/lib64 --disable-hipe --without-hipe --without-odbc --without-os_mon --enable-builtin-zlib --without-termcap --without-wx --without-erl_interface --without-javac --without-jinterface
 
 compile:
 	cd otp_src_$(OTP_VERSION); export ERL_TOP=$(CURDIR)/otp_src_$(OTP_VERSION); make
